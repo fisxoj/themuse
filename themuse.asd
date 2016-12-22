@@ -24,7 +24,8 @@
   :components ((:module "src"
                 :components
                 ((:file "api-proxy")
-                 (:file "themuse"))))
+                 (:file "themuse")
+                 (:file "api"))))
   :description "Take home challenge for The Muse"
   :long-description
   #.(with-open-file (stream (merge-pathnames
