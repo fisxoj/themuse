@@ -18,10 +18,13 @@
   :version "0.1"
   :author "Matt Novenstern"
   :license "Secret"
-  :depends-on (:nest)
+  :depends-on (:nest
+               :function-cache
+               :dexador)
   :components ((:module "src"
                 :components
-                ((:file "themuse"))))
+                ((:file "api-proxy")
+                 (:file "themuse"))))
   :description "Take home challenge for The Muse"
   :long-description
   #.(with-open-file (stream (merge-pathnames
