@@ -20,7 +20,11 @@
   :license "Secret"
   :depends-on (:nest
                :function-cache
-               :dexador)
+               :dexador
+               :nest-middleware-csrf
+               :lack-middleware-backtrace
+               :clack-static-asset-middleware
+               :clack-static-asset-djula-helpers)
   :components ((:module "src"
                 :components
                 ((:file "api-proxy")
