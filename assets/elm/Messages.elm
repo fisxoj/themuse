@@ -1,15 +1,15 @@
 module Messages exposing (Msg(..))
 
 import Model exposing (Job)
+import Http
 
 
 type Msg
-    = HttpError
-    | GotJobs (List Job)
+    = GotJobs (Result Http.Error (List Job))
+    | Search
 
 
 
--- | Search
 -- | CategoryChanged
 -- | Page
 -- | CompanyChanged String

@@ -1,4 +1,4 @@
-module Model exposing (Model, Job, model)
+module Model exposing (Model, Job, model, decodeJob)
 
 -- url is refs/landing_page, companyName is company/name
 

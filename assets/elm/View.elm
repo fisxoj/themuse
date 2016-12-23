@@ -7,4 +7,6 @@ import Html exposing (..)
 
 view : Model -> Html Msg
 view model =
-    h1 [] [ text "Potato!" ]
+    main_ []
+        [ h1 [] [ text "The Muse Job Search" ]
+        ]
