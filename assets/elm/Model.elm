@@ -3,10 +3,13 @@ module Model exposing (Model, Job, model)
 -- url is refs/landing_page, companyName is company/name
 
 import Date exposing (Date)
+import Json.Decode exposing (map8, field, int, string, list, Decoder)
+import Json.Decode.Extra exposing (date)
 
 
 type alias Job =
-    { name : String
+    { id : Int
+    , name : String
     , contents : String
     , pubDate : Date
     , categories : List String
@@ -14,6 +17,19 @@ type alias Job =
     , companyName : String
     , url : String
     }
+
+
+decodeJob : Decoder Job
+decodeJob =
+    map8 Job
+        (field "id" int)
+        (field "name" string)
+        (field "contents" string)
+        (field "pub-date" date)
+        (field "categories" (list string))
+        (field "levels" (list string))
+        (field "company-name" string)
+        (field "url" string)
 
 
 type alias Model =
