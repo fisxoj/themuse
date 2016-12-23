@@ -46,35 +46,24 @@
     (setf (quri:uri-query-params query) params)
     (multiple-value-bind (resp status-code headers) (dex:get (print query))
       (ecase status-code
-        (200 (jojo:parse resp))
+        (200 (massage-jobs (getf (jojo:parse resp) :|results|)))
         (400 (error 'invalid-request :error (getf (jojo:parse resp) :|error|)))
         (403 (error 'rate-limited :reset-time (gethash "X-RateLimit-Reset" headers)))))))
 
 
 (defparameter +valid-levels+ '("Internship" "Mid Level" "Entry Level" "Senior Level"))
 
-(defun test-jobs (&key (page 1) (descending nil) (company "") (category nil) (level nil) location)
-  (let ((query (quri:copy-uri +jobs-endpoint+))
-        ;; Create an alist with the simple params
-        (params `(("page" . ,page)
-                  ("descending" . ,descending)
-                  ("api_key" . ,(nest:config :themuse-api-key)))))
+(defun massage-jobs (results)
+  "Converts jobs from the format the Muse API returns into a simpler one for consumption by the frontend.  Mostly extracts names from nested objects."
 
-    (when (not (emptyp company))
-      (push (cons "company" company) params))
-
-    ;; Helper to add mutiple value fields to the request
-    (flet ((append-multival-param (field list)
-             (dolist (el list)
-               (push (cons field el) params))))
-
-      (append-multival-param "category" category)
-      (append-multival-param "level" level)
-      (append-multival-param "location" location))
-
-    (setf (quri:uri-query-params query) params)
-    (multiple-value-bind (resp status-code headers) (dex:get (print query))
-      (ecase status-code
-        (200 (jojo:parse resp))
-        (400 (error 'invalid-request :error (getf (jojo:parse resp) :|error|)))
-        (403 (error 'rate-limited :reset-time (gethash "X-RateLimit-Reset" headers)))))))
+  (loop for job in results
+       collecting (list :|id| (getf job :|id|)
+                        :|name| (getf job :|name|)
+                        :|contents| (getf job :|contents|)
+                        :|pub-date| (getf job :|publication_date|)
+                        :|categories| (mapcar (lambda (c) (getf c :|name|))
+                                              (getf job :|categories|))
+                        :|levels| (mapcar (lambda (l) (getf l :|name|))
+                                          (getf job :|levels|))
+                        :|company-name| (getf (getf job :|company|) :|name|)
+                        :|url| (getf (getf job :|refs|) :|landing_page|))))
