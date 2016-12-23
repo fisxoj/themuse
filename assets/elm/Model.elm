@@ -5,6 +5,7 @@ module Model exposing (Model, Job, model, decodeJob)
 import Date exposing (Date)
 import Json.Decode exposing (map8, field, int, string, list, Decoder)
 import Json.Decode.Extra exposing (date)
+import Select
 
 
 type alias Job =
@@ -36,6 +37,7 @@ type alias Model =
     { page : Int
     , company : String
     , category : List String
+    , categorySelectState : Select.Model
     , level : List String
     , location : List String
     , jobs : List Job
@@ -49,6 +51,7 @@ model =
     { page = 1
     , company = ""
     , category = []
+    , categorySelectState = Select.newState "Engineering"
     , level = []
     , location = []
     , jobs = []
