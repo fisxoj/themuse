@@ -18,7 +18,7 @@
 (define-condition rate-limited (simple-condition)
   ((reset-time :initarg :reset-time))
   (:report (lambda (e stream)
-             (format stream "The rate limit for the API has been exceede.  It resets in ~d seconds." (slot-value e 'reset-time)))))
+             (format stream "The rate limit for the API has been exceeded.  It resets in ~d seconds." (slot-value e 'reset-time)))))
 
 
 (defcached (jobs :cache-class 'lru-cache :capacity 20)
