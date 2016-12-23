@@ -4,7 +4,8 @@ import Messages exposing (Msg(..))
 import Model exposing (Model, Job)
 import Html exposing (..)
 import Html.Attributes exposing (href, class, type_, placeholder, value)
-import Html.Events exposing (onInput)
+import Html.Events exposing (onInput, onClick)
+import Html.Events.Extra exposing (onEnter)
 import Date.Extra
 
 
@@ -13,7 +14,8 @@ view model =
     main_ []
         [ h1 [] [ text "The Muse Job Search" ]
         , div [ class "search-bar" ]
-            [ input [ type_ "text", onInput CompanyChanged, placeholder "Company Name", value model.company ] []
+            [ input [ type_ "text", onInput CompanyChanged, onEnter Search, placeholder "Company Name", value model.company ] []
+            , button [ class "search-button", onClick Search ] [ text "Search" ]
             ]
         , div [ class "job-list" ] (List.map jobView model.jobs)
         ]
