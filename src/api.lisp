@@ -6,11 +6,11 @@
 (in-package #:themuse.api)
 
 (defroute app "/api/jobs"
-  (with-params (page descending companies categories levels locations)
+  (with-params (page descending company categories levels locations)
     (respond-json (themuse.api-proxy:jobs
                    :page (or page 1)
                    :descending descending
-                   :company companies
+                   :company company
                    :category categories
                    :level levels
                    :location locations))))
