@@ -44,7 +44,7 @@
       (append-multival-param "location" location))
 
     (setf (quri:uri-query-params query) params)
-    (multiple-value-bind (resp status-code headers) (dex:get (print query))
+    (multiple-value-bind (resp status-code headers) (dex:get query)
       (ecase status-code
         (200 (massage-jobs (getf (jojo:parse resp) :|results|)))
         (400 (error 'invalid-request :error (getf (jojo:parse resp) :|error|)))
