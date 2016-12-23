@@ -12,7 +12,6 @@
                   nest.middlewares.csrf:*csrf-middleware*))
 
 (defroute app "/"
-  (print *environment*)
   (render "index.html"))
 
 (defmethod nest:not-found ((app museapp))
