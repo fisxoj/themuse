@@ -7,12 +7,12 @@ import Http
 type Msg
     = GotJobs (Result Http.Error (List Job))
     | Search
+      -- | CategoryChanged
+      -- | Page
+    | CompanyChanged String
 
 
 
--- | CategoryChanged
--- | Page
--- | CompanyChanged String
 -- | SortChanged Bool
 -- | LevelChanged
 -- | LocationChanged

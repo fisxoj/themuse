@@ -18,3 +18,6 @@ update msg model =
 
         Search ->
             ( model, jobs model )
+
+        CompanyChanged company ->
+            ( { model | company = company }, Cmd.none )
