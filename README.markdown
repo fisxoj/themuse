@@ -13,7 +13,9 @@ cd assets/
 Running the app
 
 ```sh
-sbcl --eval "(ql:quickload :themuse)" --eval "(nest:start themuse::app)"
+sbcl --eval "(ql:quickload :themuse)" \
+     --eval "(push #P\"/path/to/git/repo/\" asdf:*central-registry*)"\ # If you didn't checkout to quicklisp's 'local-projects'
+     --eval "(nest:start themuse::app)"
 ```
 
 ## Installation
